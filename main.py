@@ -13,7 +13,7 @@ class uberApp(tk.Tk):
         uberDesktop.configure(background='black')
         uberDesktop.pack()
 
-        #the frames!
+        #How I handle different frames...
         self.frames = {}
         for page in (uberLoginPage, mainMenuPage):
             frame = page(uberDesktop, self)
