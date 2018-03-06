@@ -12,6 +12,7 @@ class driverRecord(Frame):
         self.grid(sticky = (N,S,W,E))
         self.grid_rowconfigure(0, weight =1)
         self.grid_columnconfigure(0, weight = 1)
+        self.grid(row=1, column=0)
 
     def createUI(self):
         tv = Treeview(self)        
@@ -52,9 +53,33 @@ class driverRecord(Frame):
         
         #self.treeview.insert('','end',text='AleWi', values=('Alex', "Williams",
                                                            #'282', '2017/5/22'))
+def createFilterPanel(self):
+    lbFirstname = Label(self, text = 'Firstname')
+    lbFirstname.grid(row=0, column=1)
 
+    firstname_text = StringVar()
+    tbFirstname = Entry(self, textvariable=firstname_text)
+    tbFirstname.grid(row=0, column=2)
+
+    lbLastname = Label(self, text = 'Lastname')
+    lbLastname.grid(row=0, column=3)
+
+    Lastname_text = StringVar()
+    tbLastname = Entry(self, textvariable=Lastname_text)
+    tbLastname.grid(row=0, column=4)
+
+    lbUsername = Label(self, text = 'Username')
+    lbUsername.grid(row=1, column=1)
+
+    Username_text = StringVar()
+    tbUsername = Entry(self, textvariable=Username_text)
+    tbUsername.grid(row=1, column=2)
+
+    
+    
 def main():
     root = Tk()
+    createFilterPanel(root)
     driverRecord(root)
     root.mainloop()
 
@@ -63,5 +88,5 @@ if __name__ == '__main__':
     main()
 
 
-scrollbar = Scrollbar(root)
-scrollbar.pack(side=RIGHT, fill=Y)
+#scrollbar = Scrollbar(root)
+#scrollbar.pack(side=RIGHT, fill=Y)
