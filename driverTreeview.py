@@ -105,6 +105,9 @@ class driverRecord(Frame):
 
         if argFirstname == "" and argLastname == "" and argUsername == "":
             self.fetchallincidentrecord()
+
+        if not argUsername == "":
+            record = q.fetchbyusername(argUsername)
             
         self.resetTreeview()
         self.loadTable(record)
