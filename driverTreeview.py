@@ -21,23 +21,22 @@ class driverRecord(Frame):
         tv = Treeview(self)        
         tv['columns'] = ('Firstname', 'Lastname', 'TicketID', 'Date')
         tv.heading('#0', text='Username', anchor='w')
-        tv.column('#0', anchor='w')
+        tv.column('#0', anchor='w', width=150 )
         tv.heading('Firstname', text='Firstname')
         tv.column('Firstname', anchor='center', width=150)
         tv.heading('Lastname', text='Lastname')
         tv.column('Lastname', anchor='center', width=150)
         tv.heading('TicketID', text='TicketID')
-        tv.column('TicketID', anchor='center', width=150)
+        tv.column('TicketID', anchor='center', width=100)
         tv.heading('Date', text='Date')
         tv.column('Date', anchor='center', width=150)
         tv.grid(sticky=(N,S,W,E))
         self.treeview = tv
         self.yscrollbar = ttk.Scrollbar(self, orient='vertical', command=tv.yview)
         tv.configure(yscrollcommand=self.yscrollbar.set)
-        tv.grid(row=1,column=0)
 
-        tv.grid(row=0, column=0, sticky="nsew")
-        self.yscrollbar.grid(row=0, column=1, sticky='nse')
+        tv.grid(row=1, column=0, sticky="nsew")
+        self.yscrollbar.grid(row=1, column=1, sticky='nse')
         self.yscrollbar.configure(command=tv.yview)
         self.grid_rowconfigure(0, weight =1)
         self.grid_columnconfigure(0, weight = 1)
@@ -88,26 +87,52 @@ class driverRecord(Frame):
         tbUsername = Entry(self, textvariable=Username_text)
         tbUsername.grid(row=1, column=3)
 
+        lbSortOption = Label(self, text = 'Sort by: ')
+        lbSortOption.grid(row=1, column=4)
+
+        spinSortOption = StringVar()
+        choices = {'', 'Username', 'Firstname', 'Lastname', 'TicketID', 'Date'}
+        
+
+        SortOptionMenu = OptionMenu(self, spinSortOption, *choices)
+        SortOptionMenu.grid(row=1, column=5)
+
         btnSubmit = Button(self,
-                           text='Submit',
+                           text='Search',
                            command=lambda: self.submitFilter(tbFirstname.get(), tbLastname.get(), tbUsername.get()))
         btnSubmit.grid(row=2, column=2)
+        
+        btnClear = Button(self,
+                           text='Clear',
+                           command=lambda: self.clearText(firstname_text, Lastname_text, Username_text))
+        btnClear.grid(row=2, column=3)
+
+
+    def clearText(self, txtFirstname, txtLastname, txtUsername):
+        txtFirstname.set("")
+        txtLastname.set("")
+        txtUsername.set("")
 
     def submitFilter(self, argFirstname, argLastname, argUsername):
         global record
         q = Query()
-        """if argUsername == "":
-            print(argUsername)
-        elif not argFirstname == "" and argLastname == "":
-            print(argLastname)"""
-        if not argFirstname == "":
+        
+        if not argFirstname == "" and argLastname == "":
             record = q.fetchbyfirstname(argFirstname)
+        elif argFirstname and argLastname:
+                record = q.fetchbyname(argFirstname, argLastname)
+        elif argUsername:
+            record = q.fetchbyusername(argUsername)
+
+        if argLastname and argFirstname == "":
+            record = q.fetchbylastname(argLastname)
+
 
         if argFirstname == "" and argLastname == "" and argUsername == "":
             self.fetchallincidentrecord()
 
-        if not argUsername == "":
-            record = q.fetchbyusername(argUsername)
+        #if not argUsername == "":
+            #record = q.fetchbyusername(argUsername)
             
         self.resetTreeview()
         self.loadTable(record)
