@@ -1,5 +1,5 @@
 import tkinter as tk
-from driverTreeview import *
+from driverTreeview import*
 
 TITLE_FONT = ('Helvetica 50 bold')
 BUTTON_FONT = ('Arial 12 bold')
@@ -17,7 +17,6 @@ class uberApp(tk.Tk):
         uberDesktop.configure(background='black')
         uberDesktop.pack(pady=100, padx=100)
 
-
         #the frames are handled here. I put all my frames here...
         self.frames = {}
         for page in (uberLoginPage, mainMenuPage, reportMenu):
@@ -33,11 +32,14 @@ class uberApp(tk.Tk):
         frame = self.frames[cont]
         frame.tkraise() #raises the frame to the front...aka switch screens
 
-    def create_window(self, name):
+    def create_window(self, name, controller):
         self.counter+=1
         window = tk.Toplevel(self)
-        window.wm_title(name)
-
+        window.title(name)
+        window.minsize(height=200, width=1000)
+        driverIncidentRecord = driverRecord(window)
+        myDB = tk.Frame(driverIncidentRecord)
+        self.show_frame(myDB)
 
 
 #uberLoginPage is the frame that handles what the login page will look like
@@ -115,16 +117,23 @@ class reportMenu(tk.Frame):
         selection=tk.StringVar(self)
         selection.set("--")
         reportButton = tk.OptionMenu(self, selection, *REPORT_OPTIONS)
-        selectButton = tk.Button(self, text="Select", bg='#008080', fg='white', font = GENERAL_FONT, command=lambda:self.getQuery(selection, controller)) #command=lambd
+        selectButton = tk.Button(self, text="Select", bg='#008080', fg='white', font = GENERAL_FONT, command=lambda:self.getTable(selection, controller)) #command=lambd
 
         instructionLabel.pack(pady=10)
         reportButton.pack(padx=210, pady=10)
         selectButton.pack()
 
-    def getQuery(self, selection, controller):
+    #getQuery is a method that will call create_window from the UberApp class to create a new window,
+    #and the correct frame to display the query
+    def getTable(self, selection, controller):
         selection = selection.get()
         if selection == "Driver's Incident":
-            controller.create_window("Driver's Incident")
+            #controller.show_frame(driverIncident)
+            controller.create_window(selection)
+        #elif selection == "Driver's Bank":
+        #    controller.show_frame
+        #elif selection =="Driver License":
+        #    controller.show_frame
 
 
 class alterMenuPage(tk.Frame):
