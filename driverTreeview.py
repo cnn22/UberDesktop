@@ -10,8 +10,7 @@ class driverRecord(Frame):
     def __init__(self, parent):
         Frame.__init__(self, parent)
         self.createUI()
-        self.createFilterPanel()
-        self.fetchallincidentrecord()
+        self.createFilterPanel(parent)
         self.grid(sticky = (N,S,W,E))
         self.grid_rowconfigure(0, weight =1)
         self.grid_columnconfigure(0, weight = 1)
@@ -42,10 +41,10 @@ class driverRecord(Frame):
         self.grid_columnconfigure(0, weight = 1)
         
 
-    def fetchallincidentrecord(self):
+    def fetchallincidentrecord(self, sortoption):
         global record
         q = Query()
-        record = q.fetchincidentrecord()
+        record = q.fetchincidentrecord(sortoption)
         self.loadTable(record)
 
     def resetTreeview(self):
@@ -65,7 +64,7 @@ class driverRecord(Frame):
         #self.treeview.insert('','end',text='AleWi', values=('Alex', "Williams",
                                                            #'282', '2017/5/22'))
         
-    def createFilterPanel(self):
+    def createFilterPanel(self, parent):
         lbFirstname = Label(self, text = 'Firstname')
         lbFirstname.grid(row=0, column=2)
 
@@ -99,44 +98,52 @@ class driverRecord(Frame):
 
         btnSubmit = Button(self,
                            text='Search',
-                           command=lambda: self.submitFilter(tbFirstname.get(), tbLastname.get(), tbUsername.get()))
+                           command=lambda: self.submitFilter(tbFirstname.get(), tbLastname.get(), tbUsername.get(), spinSortOption.get()))
         btnSubmit.grid(row=2, column=2)
         
         btnClear = Button(self,
                            text='Clear',
-                           command=lambda: self.clearText(firstname_text, Lastname_text, Username_text))
+                           command=lambda: self.clearText(firstname_text, Lastname_text, Username_text, spinSortOption))
         btnClear.grid(row=2, column=3)
 
+        btnClose = Button(self,
+                           text='Close',
+                           command=parent.destroy)
+        btnClose.grid(row=2, column=4)
 
-    def clearText(self, txtFirstname, txtLastname, txtUsername):
+
+    def clearText(self, txtFirstname, txtLastname, txtUsername, sortoption):
         txtFirstname.set("")
         txtLastname.set("")
         txtUsername.set("")
+        sortoption.set("")
 
-    def submitFilter(self, argFirstname, argLastname, argUsername):
+    def submitFilter(self, argFirstname, argLastname, argUsername, sortoption):
         global record
         q = Query()
+        if sortoption == "":
+            sortoption = "Date"
         
         if not argFirstname == "" and argLastname == "":
-            record = q.fetchbyfirstname(argFirstname)
+            record = q.fetchbyfirstname(argFirstname, sortoption)
         elif argFirstname and argLastname:
-                record = q.fetchbyname(argFirstname, argLastname)
+                record = q.fetchbyname(argFirstname, argLastname, sortoption)
         elif argUsername:
-            record = q.fetchbyusername(argUsername)
+            record = q.fetchbyusername(argUsername, sortoption)
 
         if argLastname and argFirstname == "":
-            record = q.fetchbylastname(argLastname)
+            record = q.fetchbylastname(argLastname, sortoption)
 
 
         if argFirstname == "" and argLastname == "" and argUsername == "":
-            self.fetchallincidentrecord()
+            self.fetchallincidentrecord(sortoption)
 
         #if not argUsername == "":
             #record = q.fetchbyusername(argUsername)
             
         self.resetTreeview()
         self.loadTable(record)
-
+        
     
 def main():
     root = Tk()
