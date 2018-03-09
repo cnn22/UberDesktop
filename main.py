@@ -1,5 +1,7 @@
 import tkinter as tk
 from driverTreeview import *
+import mysql.connector
+from mysql.connector import errorcode
 
 
 TITLE_FONT = ('Helvetica 50 bold')
@@ -18,7 +20,6 @@ class uberApp(tk.Tk):
         uberDesktop.configure(background='black')
         uberDesktop.pack(pady=100, padx=100)
 
-
         #the frames are handled here. I put all my frames here...
         self.frames = {}
         for page in (uberLoginPage, mainMenuPage, reportMenu):
@@ -34,12 +35,17 @@ class uberApp(tk.Tk):
         frame = self.frames[cont]
         frame.tkraise() #raises the frame to the front...aka switch screens
 
+    #create_window creates a child window (another window).
     def create_window(self, name):
         self.counter+=1
         window = tk.Toplevel(self)
         window.wm_title(name)
         window.minsize(height=200, width=1000)
         driverIncidentRecord = driverRecord(window)
+
+    #startDBConnection is a function that will help the application to connect to a database givem the name
+    def startDBConnection(self, database):
+        print("Connected")
 
 #uberLoginPage is the frame that handles what the login page will look like
 class uberLoginPage(tk.Frame):
@@ -64,6 +70,9 @@ class uberLoginPage(tk.Frame):
         #loginButton.bind('<return', login)
         loginButton.config(width=30)
         loginButton.pack(pady=10, padx=10, ipady=5)
+
+    #def authenticateLogin(self, email, password):
+
     #def login(self, cont)
     #def clearWidget():
 #mainMenuPage is the frame that handles what the main menu will look like
@@ -72,11 +81,6 @@ class mainMenuPage(tk.Frame):
         tk.Frame.__init__(self, parent)
 
         self.configure(background='black')
-
-
-        #selection = tk.StringVar(self)
-        #selection.set(REPORT_OPTIONS[0])
-        #reportMenu = tk.OptionMenu(self, selection, *REPORT_OPTIONS)
 
         welcomeLabel = tk.Label(self, text = 'Welcome', fg = 'white', bg='black', font='Helvetica 18 bold')
         displayUsername = tk.Label(self, text = '[user]', fg = '#00e6e6', bg='black', font='Helvetica 18')
@@ -105,6 +109,7 @@ class mainMenuPage(tk.Frame):
     #def alterMenu
     #def createMenu
     #def lookupMenu
+
 #reportMenu is the frame that handles the report selections
 class reportMenu(tk.Frame):
     def __init__(self, parent, controller):
@@ -116,17 +121,20 @@ class reportMenu(tk.Frame):
         selection=tk.StringVar(self)
         selection.set("--")
         reportButton = tk.OptionMenu(self, selection, *REPORT_OPTIONS)
-        selectButton = tk.Button(self, text="Select", bg='#008080', fg='white', font = GENERAL_FONT, command=lambda:self.getQuery(selection, controller)) #command=lambd
+        selectButton = tk.Button(self, text="Select", bg='#008080', fg='white', font = GENERAL_FONT, command=lambda:self.getTable(selection, controller)) #command=lambd
+        backButton = tk.Button(self, text='Back', bg='#008080', fg='white', font = GENERAL_FONT, command=lambda:controller.show_frame(mainMenuPage))
 
         instructionLabel.pack(pady=10)
         reportButton.pack(padx=210, pady=10)
         selectButton.pack()
+        backButton.pack()
 
-    def getQuery(self, selection, controller):
+    #getTable is a function that will help call create_window and in that window,
+    #it will contain the table that was selected for the query
+    def getTable(self, selection, controller):
         selection = selection.get()
         if selection == "Driver's Incident":
             controller.create_window("Driver's Incident")
-
 
 class alterMenuPage(tk.Frame):
     def __init__(self, parent, controller):
