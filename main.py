@@ -1,7 +1,8 @@
 import tkinter as tk
 from driverTreeview import *
-import mysql.connector
-from mysql.connector import errorcode
+#import mysql.connector
+#from mysql.connector import errorcode
+#from PIL import ImageTk, Image
 
 
 TITLE_FONT = ('Helvetica 50 bold')
@@ -22,11 +23,12 @@ class uberApp(tk.Tk):
 
         #the frames are handled here. I put all my frames here...
         self.frames = {}
-        for page in (uberLoginPage, mainMenuPage, reportMenu):
+        for page in (uberLoginPage, mainMenuPage, reportMenu, insertMenu):
             frame = page(uberDesktop, self)
             self.frames[page] = frame
             frame.grid(row=0, column=0, sticky='nsew')
 
+        #self.startDBConnection("employee")
         self.show_frame(uberLoginPage) #displays the loginPage after firing up the app
 
     #show_frame is a function that will show the frame that you want to display by "raising it".
@@ -43,9 +45,21 @@ class uberApp(tk.Tk):
         window.minsize(height=200, width=1000)
         driverIncidentRecord = driverRecord(window)
 
-    #startDBConnection is a function that will help the application to connect to a database givem the name
-    def startDBConnection(self, database):
-        print("Connected")
+    #getTable is a function that will help call create_window and in that window,
+    #it will contain the table that was selected for the query
+    def getTable(self, selection, controller):
+        selection = selection.get()
+        if selection == "Driver's Incident":
+            controller.create_window("Driver's Incident")
+        elif selection == "Driver's Bank":
+            controller.create_window("Driver's Bank")
+        elif selection == "Driver's License":
+            controller.create_window("Driver's License")
+        elif selection == "Address":
+            controller.create_window("Address")
+        elif selection == "BankingAccount":
+            controller.create_window("BankingAccount")
+
 
 #uberLoginPage is the frame that handles what the login page will look like
 class uberLoginPage(tk.Frame):
@@ -75,6 +89,7 @@ class uberLoginPage(tk.Frame):
 
     #def login(self, cont)
     #def clearWidget():
+
 #mainMenuPage is the frame that handles what the main menu will look like
 class mainMenuPage(tk.Frame):
     def __init__(self, parent, controller):
@@ -89,13 +104,13 @@ class mainMenuPage(tk.Frame):
         reportButton = tk.Button(self, text='REPORTS', bg='#008080', fg='white', font = BUTTON_FONT, command=lambda:controller.show_frame(reportMenu)) #command=Lambda:controller.show_frame(createMenuPage)
 
 
-        alterMenuButton = tk.Button(self, text='ALTER', bg='#008080', fg='white', font = BUTTON_FONT) #command=lambda:controller.show_frame(alterMenuPage)
+        insertMenuButton = tk.Button(self, text='INSERT', bg='#008080', fg='white', font = BUTTON_FONT, command=lambda:controller.show_frame(insertMenu))
         lookupMenuButton = tk.Button(self, text='LOOK UP', bg='#008080', fg='white', font = BUTTON_FONT) #command=Lambda:controller.show_frame(lookupMenuPage)
 
         welcomeLabel.pack( pady=5)
         displayUsername.pack(pady=10)
         signOutButton.config(width=10)
-        alterMenuButton.config(width=50)
+        insertMenuButton.config(width=50)
         #reportButton.config(width=50)
         #reportMenu.pack()
         lookupMenuButton.config(width=50)
@@ -103,7 +118,7 @@ class mainMenuPage(tk.Frame):
         #signOutButton.place(relx=0.0, rely=1.0, anchor='ne')
         signOutButton.pack()
         reportButton.pack(pady=5, ipadx=210, ipady=5)
-        alterMenuButton.pack(pady=5, ipady=5)
+        insertMenuButton.pack(pady=5, ipady=5)
         lookupMenuButton.pack(pady=5, ipady=5)
 
     #def alterMenu
@@ -117,11 +132,11 @@ class reportMenu(tk.Frame):
         self.configure(background='black')
 
         instructionLabel = tk.Label(self,text="Select which report you would like to perform.", font=GENERAL_FONT,fg='white', bg='black')
-        REPORT_OPTIONS = ["Driver's Incident", "Driver's Bank", "Driver License"]
+        REPORT_OPTIONS = ["Driver's Incident", "Driver's Bank", "Driver License", "--"]
         selection=tk.StringVar(self)
         selection.set("--")
         reportButton = tk.OptionMenu(self, selection, *REPORT_OPTIONS)
-        selectButton = tk.Button(self, text="Select", bg='#008080', fg='white', font = GENERAL_FONT, command=lambda:self.getTable(selection, controller)) #command=lambd
+        selectButton = tk.Button(self, text="Select", bg='#008080', fg='white', font = GENERAL_FONT, command=lambda:controller.getTable(selection, controller)) #command=lambd
         backButton = tk.Button(self, text='Back', bg='#008080', fg='white', font = GENERAL_FONT, command=lambda:controller.show_frame(mainMenuPage))
 
         instructionLabel.pack(pady=10)
@@ -129,17 +144,28 @@ class reportMenu(tk.Frame):
         selectButton.pack()
         backButton.pack()
 
-    #getTable is a function that will help call create_window and in that window,
-    #it will contain the table that was selected for the query
-    def getTable(self, selection, controller):
-        selection = selection.get()
-        if selection == "Driver's Incident":
-            controller.create_window("Driver's Incident")
 
-class alterMenuPage(tk.Frame):
+#insertMenu is a frame that handles what the insert menu should look like
+class insertMenu(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.configure(background='black')
+
+        instructionLabel = tk.Label(self, text="Choose which table you would like to insert?",
+        fg = 'white', bg = 'black', font=GENERAL_FONT)
+
+        INSERT_OPTIONS = ["Address", "BankingAccount", "Driver", "DriverLicense", "Fare", "IncidentRecord", "Receipt", "RideRequest", "RideType", "UberAccount", "UserRating", "Vehicle", "VehicleType", "--"]
+        selection=tk.StringVar(self)
+        selection.set("--")
+        insertButton = tk.OptionMenu(self, selection, *INSERT_OPTIONS)
+        selectButton = tk.Button(self, text="Select", bg='#008080', fg='white', font = GENERAL_FONT, command=lambda:controller.getTable(selection, controller)) #command=lambd
+        backButton = tk.Button(self, text='Back', bg='#008080', fg='white', font = GENERAL_FONT, command=lambda:controller.show_frame(mainMenuPage))
+
+        instructionLabel.pack(pady=10)
+        insertButton.pack(padx=210, pady=10)
+        selectButton.pack()
+        backButton.pack()
+
 
 app = uberApp()
 app.mainloop()
