@@ -27,7 +27,7 @@ class uberApp(tk.Tk):
 
         #the frames are handled here. I put all my frames here...
         self.frames = {}
-        for page in (uberLoginPage, mainMenuPage, reportMenu, insertMenu):
+        for page in (uberLoginPage, mainMenuPage, viewMenu, insertMenu):
             frame = page(uberDesktop, self)
             self.frames[page] = frame
             frame.grid(row=0, column=0, sticky='nsew')
@@ -121,7 +121,7 @@ class mainMenuPage(tk.Frame):
         displayUsername = tk.Label(self, text = '[user]', fg = '#00e6e6', bg='black', font='Helvetica 18')
 
         signOutButton = tk.Button(self, text='Sign Out', bg='#008080', fg='white', font = 'Arial 10', command=lambda:controller.show_frame(uberLoginPage)) #this is where the magig happens with the frames!
-        reportButton = tk.Button(self, text='REPORTS', bg='#008080', fg='white', font = BUTTON_FONT, command=lambda:controller.show_frame(reportMenu)) #command=Lambda:controller.show_frame(createMenuPage)
+        viewButton = tk.Button(self, text='VIEW', bg='#008080', fg='white', font = BUTTON_FONT, command=lambda:controller.show_frame(viewMenu)) #command=Lambda:controller.show_frame(createMenuPage)
 
 
         insertMenuButton = tk.Button(self, text='INSERT', bg='#008080', fg='white', font = BUTTON_FONT, command=lambda:controller.show_frame(insertMenu))
@@ -137,7 +137,7 @@ class mainMenuPage(tk.Frame):
 
         #signOutButton.place(relx=0.0, rely=1.0, anchor='ne')
         signOutButton.pack()
-        reportButton.pack(pady=5, ipadx=210, ipady=5)
+        viewButton.pack(pady=5, ipadx=227, ipady=3)
         insertMenuButton.pack(pady=5, ipady=5)
         lookupMenuButton.pack(pady=5, ipady=5)
 
@@ -145,8 +145,8 @@ class mainMenuPage(tk.Frame):
     #def createMenu
     #def lookupMenu
 
-#reportMenu is the frame that handles the report selections
-class reportMenu(tk.Frame):
+#reportMenu is the frame that handles the view selections
+class viewMenu(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.configure(background='black')
