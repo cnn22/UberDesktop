@@ -155,15 +155,14 @@ class viewMenu(tk.Frame):
         REPORT_OPTIONS = ["Addresses", "Driver's Bank", "Driver's Incident", "Driver's License", "User Rating", "--"]
         selection=tk.StringVar(self)
         selection.set("--")
-        reportButton = tk.OptionMenu(self, selection, *REPORT_OPTIONS)
+        viewButton = tk.OptionMenu(self, selection, *REPORT_OPTIONS)
         selectButton = tk.Button(self, text="Select", bg='#008080', fg='white', font = GENERAL_FONT, command=lambda:controller.getTable(selection, controller)) #command=lambd
         backButton = tk.Button(self, text='Back', bg='#008080', fg='white', font = GENERAL_FONT, command=lambda:controller.show_frame(mainMenuPage))
 
         instructionLabel.pack(pady=10)
-        reportButton.pack(padx=210, pady=10)
-        selectButton.pack()
-        backButton.pack()
-
+        viewButton.pack(padx=210, pady=50)
+        selectButton.pack(ipadx=150, ipady = 5, pady=10)
+        backButton.pack(ipadx=155, ipady=5)
 
 #insertMenu is a frame that handles what the insert menu should look like
 class insertMenu(tk.Frame):
@@ -182,9 +181,9 @@ class insertMenu(tk.Frame):
         backButton = tk.Button(self, text='Back', bg='#008080', fg='white', font = GENERAL_FONT, command=lambda:controller.show_frame(mainMenuPage))
 
         instructionLabel.pack(pady=10)
-        insertButton.pack(padx=210, pady=10)
-        selectButton.pack()
-        backButton.pack()
+        insertButton.pack(padx=210, pady=50)
+        selectButton.pack(ipadx = 150, ipady=5, pady=10)
+        backButton.pack(ipadx=155, ipady=5)
 
 
 app = uberApp()
