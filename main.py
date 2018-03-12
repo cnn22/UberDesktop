@@ -4,10 +4,7 @@ from licenseTreeview import *
 from userRatingTreeview import userRating
 from addressView import addressRecord
 from bankTreeview import bankTreeview
-#import mysql.connector
-#from mysql.connector import errorcode
-#from PIL import ImageTk, Image
-
+from vehicleTreeview import vehicleRecord
 
 TITLE_FONT = ('Helvetica 50 bold')
 BUTTON_FONT = ('Arial 12 bold')
@@ -57,6 +54,8 @@ class uberApp(tk.Tk):
             userRatingRecord = userRating(window)
         elif name == "Addresses":
             addresses = addressRecord(window)
+        elif name == "Vehicles":
+            vehicles = vehicleRecord(window)
 
 
 
@@ -79,6 +78,8 @@ class uberApp(tk.Tk):
             controller.create_window("User Rating")
         elif selection == "Addresses":
             controller.create_window("Addresses")
+        elif selection == "Vehicles":
+            controller.create_window("Vehicles")
 
 
 #uberLoginPage is the frame that handles what the login page will look like
@@ -152,7 +153,7 @@ class viewMenu(tk.Frame):
         self.configure(background='black')
 
         instructionLabel = tk.Label(self,text="Select which report you would like to perform.", font=GENERAL_FONT,fg='white', bg='black')
-        REPORT_OPTIONS = ["Addresses", "Driver's Bank", "Driver's Incident", "Driver's License", "User Rating", "--"]
+        REPORT_OPTIONS = ["--", "Addresses", "Driver's Bank", "Driver's Incident", "Driver's License", "User Rating", "Vehicles"]
         selection=tk.StringVar(self)
         selection.set("--")
         viewButton = tk.OptionMenu(self, selection, *REPORT_OPTIONS)
