@@ -24,7 +24,7 @@ class VehicleQuery():
     #fetches the Vehicle table
     def fetchtable(self):
         try:
-            cnx = mysql.connector.connect(user='root', password='root', host = '127.0.0.1', database='test')
+            cnx = mysql.connector.connect(user='root', password='1eC8E$NT*b', host = '127.0.0.1', database='uber')
         except mysql.connector.Error as err:
             if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
                 print("Something is wrong with your username or password")
@@ -43,7 +43,7 @@ class VehicleQuery():
 
     def fetchbyusername(self, username, sortoption):
         try:
-            cnx = mysql.connector.connect(user='root', password='root', host = '127.0.0.1', database='test')
+            cnx = mysql.connector.connect(user='root', password='1eC8E$NT*b', host = '127.0.0.1', database='uber')
         except mysql.connector.Error as err:
             if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
                 print("Something is wrong with your username or password")
@@ -54,7 +54,7 @@ class VehicleQuery():
         else:
             sortoption = self.formatsort(sortoption)
             query = ("""SELECT
-                        d.driverid, u.firstname, u.lastname, v.carid, v.licenseplate, v.color, v.year, v.model, v.numseats, v.vehicletypeid
+                        d.driverid, u.username, u.firstname, u.lastname, v.carid, v.licenseplate, v.color, v.year, v.model, v.numseats, v.vehicletypeid
                         FROM uberaccount u, driver d, vehicle v, vehicletype vt
                         WHERE
                         u.username = d.username and d.driverid = v.driverid and v.vehicletypeid = vt.vehicletypeid
@@ -69,7 +69,7 @@ class VehicleQuery():
 
     def fetchbydriverID(self, driverID, sortOption):
         try:
-            cnx = mysql.connector.connect(user='root', password='root', host = '127.0.0.1', database='test')
+            cnx = mysql.connector.connect(user='root', password='1eC8E$NT*b', host = '127.0.0.1', database='uber')
         except mysql.connector.Error as err:
             if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
                 print("Something is wrong with your username or password")
@@ -79,7 +79,7 @@ class VehicleQuery():
                 print(err)
         else:
             sortoption = self.formatsort(sortOption)
-            query = ("""SELECT d.driverid, u.firstname, u.lastname, v.carid, v.licenseplate, v.color, v.year, v.model, v.numseats, v.vehicletypeid
+            query = ("""SELECT d.driverid, u.username, u.firstname, u.lastname, v.carid, v.licenseplate, v.color, v.year, v.model, v.numseats, v.vehicletypeid
                         FROM uberaccount u, driver d, vehicle v, vehicletype vt
                         WHERE u.username = d.username and d.driverid = v.driverid and v.vehicletypeid = vt.vehicletypeid
                         ORDER BY %S;"""%(licensePlate, sortoption)
@@ -92,7 +92,7 @@ class VehicleQuery():
 
     def fetchbyYear(self, year, sortoption):
         try:
-            cnx = mysql.connector.connect(user='root', password='root', host = '127.0.0.1', database='test')
+            cnx = mysql.connector.connect(user='root', password='1eC8E$NT*b', host = '127.0.0.1', database='uber')
         except mysql.connector.Error as err:
             if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
                 print("Something is wrong with your username or password")
@@ -102,7 +102,7 @@ class VehicleQuery():
                 print(err)
         else:
             sortoption = self.formatsort(sortOption)
-            query = ("""SELECT d.driverid, u.firstname, u.lastname, v.carid, v.licenseplate, v.color, v.year, v.model, v.numseats, v.vehicletypeid
+            query = ("""SELECT d.driverid, u.username, u.firstname, u.lastname, v.carid, v.licenseplate, v.color, v.year, v.model, v.numseats, v.vehicletypeid
                         FROM uberaccount u, driver d, vehicle v, vehicletype vt
                         WHERE u.username = d.username and d.driverid = v.driverid and v.vehicletypeid = vt.vehicletypeid
                         ORDER BY %s;"""%(year, sortoption)
@@ -115,7 +115,7 @@ class VehicleQuery():
 
     def fetchVehicleTable(self, sortoption):
         try:
-            cnx = mysql.connector.connect(user='root', password='root', host = '127.0.0.1', database='test')
+            cnx = mysql.connector.connect(user='root', password='1eC8E$NT*b', host = '127.0.0.1', database='uber')
         except mysql.connector.Error as err:
             if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
                 print("Something is wrong with your username or password")
@@ -125,7 +125,7 @@ class VehicleQuery():
                 print(err)
         else:
             sortoption = self.formatsort(sortoption)
-            query = ("""SELECT d.driverid, u.firstname, u.lastname, v.carid, v.licenseplate, v.color, v.year, v.model, v.numseats, v.vehicletypeid
+            query = ("""SELECT d.driverid, u.username, u.firstname, u.lastname, v.carid, v.licenseplate, v.color, v.year, v.model, v.numseats, v.vehicletypeid
                         FROM uberaccount u, driver d, vehicle v, vehicletype vt
                         WHERE u.username = d.username and d.driverid = v.driverid and v.vehicletypeid = vt.vehicletypeid
                         ORDER BY %s;"""%(sortoption))
