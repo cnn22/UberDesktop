@@ -17,9 +17,12 @@ class vehicleRecord(Frame):
 
     def vehicleUI(self):
         tv = Treeview(self)
-        tv['columns'] = ("Firstname", "Lastname", "CarID", "LicensePlate", "Year", "Color", "Model", "NumSeats","VehicleTypeID")
+        tv['columns'] = ("Username", "Firstname", "Lastname", "CarID", "LicensePlate", "Year", "Color", "Model", "NumSeats","VehicleTypeID")
         tv.heading("#0", text="DriverID", anchor='w')
-        tv.column("#0", anchor='w', width=70)
+        tv.column("#0", anchor='w', width=50)
+
+        tv.heading("Username",text="Username")
+        tv.column("Username", anchor="center", width=60)
 
         tv.heading("Firstname",text="Firstname")
         tv.column("Firstname", anchor="center", width=60)
@@ -28,25 +31,25 @@ class vehicleRecord(Frame):
         tv.column("Lastname", anchor="center", width=60)
 
         tv.heading("CarID", text="CarID")
-        tv.column("CarID", anchor="center", width=75)
+        tv.column("CarID", anchor="center", width=40)
 
         tv.heading("LicensePlate", text="LicensePlate")
         tv.column("LicensePlate", anchor="center", width=75)
 
         tv.heading("Year", text="Year")
-        tv.column("Year", anchor="center", width=30)
+        tv.column("Year", anchor="center", width=35)
 
         tv.heading("Color", text="Color")
-        tv.column("Color", anchor="center", width=55)
+        tv.column("Color", anchor="center", width=38)
 
         tv.heading("Model", text="Model")
         tv.column("Model", anchor="center", width=50)
 
         tv.heading("NumSeats", text="NumSeats")
-        tv.column("NumSeats", anchor="center", width=50)
+        tv.column("NumSeats", anchor="center", width=55)
 
         tv.heading("VehicleTypeID", text="VehicleTypeID")
-        tv.column("VehicleTypeID", anchor="center", width=50)
+        tv.column("VehicleTypeID", anchor="center", width=60)
         tv.grid(sticky=(N,S,W,E))
         self.treeview = tv
         self.yscrollbar = ttk.Scrollbar(self, orient='vertical', command=tv.yview)
@@ -135,16 +138,17 @@ class vehicleRecord(Frame):
     def loadTable(self, r):
         for i in r:
             driverID = i[0]
-            firstname = i[1]
-            lastname = i[2]
-            carID = i[3]
-            licensePlate = i[4]
-            color = i[5]
-            year = i[6]
-            model = i[7]
-            numSeats = i[8]
-            vehicleTypeID = i[9]
-            self.treeview.insert('', 'end', text=driverID, values=(firstname, lastname, carID, licensePlate, color, year, model, numSeats, vehicleTypeID))
+            username = i[1]
+            firstname = i[2]
+            lastname = i[3]
+            carID = i[4]
+            licensePlate = i[5]
+            color = i[6]
+            year = i[7]
+            model = i[8]
+            numSeats = i[9]
+            #vehicleTypeID = i[]
+            self.treeview.insert('', 'end', text=driverID, values=(username, firstname, lastname, carID, licensePlate, color, year, model, numSeats))
 
 def main():
     root=Tk()
