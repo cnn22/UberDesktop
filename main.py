@@ -1,5 +1,9 @@
 import tkinter as tk
 from driverTreeview import *
+from licenseTreeview import *
+from userRatingTreeview import userRating
+from addressView import addressRecord
+from bankTreeview import bankTreeview
 #import mysql.connector
 #from mysql.connector import errorcode
 #from PIL import ImageTk, Image
@@ -43,12 +47,24 @@ class uberApp(tk.Tk):
         window = tk.Toplevel(self)
         window.wm_title(name)
         window.minsize(height=200, width=1000)
-        driverIncidentRecord = driverRecord(window)
+        if name == "Driver's Incident":
+            driverIncidentRecord = driverRecord(window) #calling the driverIncidentRecord to make the gui inside the child window
+        elif name == "Driver's Bank:":
+            driverBankingRecord = bankTreeview(window)
+        elif name == "Driver's License":
+            driverLicenseRecord = driverLicenseView(window)
+        elif name == "User Rating":
+            userRatingRecord = userRating(window)
+        elif name == "Addresses":
+            addresses = addressRecord(window)
+
+
 
     #getTable is a function that will help call create_window and in that window,
     #it will contain the table that was selected for the query
     def getTable(self, selection, controller):
         selection = selection.get()
+        print(selection)
         if selection == "Driver's Incident":
             controller.create_window("Driver's Incident")
         elif selection == "Driver's Bank":
@@ -59,6 +75,10 @@ class uberApp(tk.Tk):
             controller.create_window("Address")
         elif selection == "BankingAccount":
             controller.create_window("BankingAccount")
+        elif selection == "User Rating":
+            controller.create_window("User Rating")
+        elif selection == "Addresses":
+            controller.create_window("Addresses")
 
 
 #uberLoginPage is the frame that handles what the login page will look like
@@ -132,7 +152,7 @@ class reportMenu(tk.Frame):
         self.configure(background='black')
 
         instructionLabel = tk.Label(self,text="Select which report you would like to perform.", font=GENERAL_FONT,fg='white', bg='black')
-        REPORT_OPTIONS = ["Driver's Incident", "Driver's Bank", "Driver License", "--"]
+        REPORT_OPTIONS = ["Addresses", "Driver's Bank", "Driver's Incident", "Driver's License", "User Rating", "--"]
         selection=tk.StringVar(self)
         selection.set("--")
         reportButton = tk.OptionMenu(self, selection, *REPORT_OPTIONS)
