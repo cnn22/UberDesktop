@@ -24,7 +24,7 @@ class VehicleQuery():
     #fetches the Vehicle table
     def fetchtable(self):
         try:
-            cnx = mysql.connector.connect(user='root', password='1eC8E$NT*b', host = '127.0.0.1', database='uber')
+            cnx = mysql.connector.connect(user='root', password='root', host = '127.0.0.1', database='test')
         except mysql.connector.Error as err:
             if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
                 print("Something is wrong with your username or password")
@@ -43,7 +43,7 @@ class VehicleQuery():
 
     def fetchbyusername(self, username, sortoption):
         try:
-            cnx = mysql.connector.connect(user='root', password='1eC8E$NT*b', host = '127.0.0.1', database='uber')
+            cnx = mysql.connector.connect(user='root', password='root', host = '127.0.0.1', database='test')
         except mysql.connector.Error as err:
             if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
                 print("Something is wrong with your username or password")
@@ -69,7 +69,7 @@ class VehicleQuery():
 
     def fetchbydriverID(self, driverID, sortOption):
         try:
-            cnx = mysql.connector.connect(user='root', password='1eC8E$NT*b', host = '127.0.0.1', database='uber')
+            cnx = mysql.connector.connect(user='root', password='root', host = '127.0.0.1', database='test')
         except mysql.connector.Error as err:
             if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
                 print("Something is wrong with your username or password")
@@ -92,7 +92,7 @@ class VehicleQuery():
 
     def fetchbyYear(self, year, sortoption):
         try:
-            cnx = mysql.connector.connect(user='root', password='1eC8E$NT*b', host = '127.0.0.1', database='uber')
+            cnx = mysql.connector.connect(user='root', password='root', host = '127.0.0.1', database='test')
         except mysql.connector.Error as err:
             if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
                 print("Something is wrong with your username or password")
@@ -115,7 +115,7 @@ class VehicleQuery():
 
     def fetchVehicleTable(self, sortoption):
         try:
-            cnx = mysql.connector.connect(user='root', password='1eC8E$NT*b', host = '127.0.0.1', database='uber')
+            cnx = mysql.connector.connect(user='root', password='root', host = '127.0.0.1', database='test')
         except mysql.connector.Error as err:
             if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
                 print("Something is wrong with your username or password")
