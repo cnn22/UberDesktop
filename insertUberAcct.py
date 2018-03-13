@@ -9,7 +9,7 @@ class insert():
     def insertAccount(self, statement):        
         insertTest = "INSERT INTO uberaccount(username,firstname,lastname,secret,email,phoneNum,driverOpt) VALUES('%s','%s','%s','%s','%s','%s','%s')" % (statement)
         try:
-            cnx = mysql.connector.connect(user="Cortana", password="sqlpro2018", host= "uber.cqqmzgtyi8vj.us-east-1.rds.amazonaws.com",database="Uber")           
+            cnx = mysql.connector.connect(user="user", password="password", host= "host",database="database")           
         except:
             cnx.rollback()
         cursor = cnx.cursor()
