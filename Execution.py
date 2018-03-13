@@ -1,4 +1,4 @@
-Class Execution():
+class Execution():
 
 
     def mysqlExecute(self, username, password, host, dbname, query):
