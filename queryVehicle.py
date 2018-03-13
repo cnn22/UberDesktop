@@ -54,10 +54,10 @@ class VehicleQuery():
         else:
             sortoption = self.formatsort(sortoption)
             query = ("""SELECT
-                        d.driverid, u.username, u.firstname, u.lastname, v.carid, v.licenseplate, v.color, v.year, v.model, v.numseats, v.vehicletypeid
-                        FROM uberaccount u, driver d, vehicle v, vehicletype vt
+                        d.driverid, u.username, u.firstname, u.lastname, v.carid, v.licenseplate, v.color, v.year, v.model, v.numseats
+                        FROM uberaccount u, driver d, vehicle v
                         WHERE
-                        u.username = d.username and d.driverid = v.driverid and v.vehicletypeid = vt.vehicletypeid
+                        u.username = d.username and d.driverid = v.driverid
                         u.username = '%s'
                         ORDER BY %s;"""%(username, sortoption))
 
@@ -79,9 +79,9 @@ class VehicleQuery():
                 print(err)
         else:
             sortoption = self.formatsort(sortOption)
-            query = ("""SELECT d.driverid, u.username, u.firstname, u.lastname, v.carid, v.licenseplate, v.color, v.year, v.model, v.numseats, v.vehicletypeid
-                        FROM uberaccount u, driver d, vehicle v, vehicletype vt
-                        WHERE u.username = d.username and d.driverid = v.driverid and v.vehicletypeid = vt.vehicletypeid
+            query = ("""SELECT d.driverid, u.username, u.firstname, u.lastname, v.carid, v.licenseplate, v.color, v.year, v.model, v.numseats
+                        FROM uberaccount u, driver d, vehicle v
+                        WHERE u.username = d.username and d.driverid = v.driverid
                         ORDER BY %S;"""%(licensePlate, sortoption)
                     )
             cursor = cnx.cursor()
@@ -102,9 +102,9 @@ class VehicleQuery():
                 print(err)
         else:
             sortoption = self.formatsort(sortOption)
-            query = ("""SELECT d.driverid, u.username, u.firstname, u.lastname, v.carid, v.licenseplate, v.color, v.year, v.model, v.numseats, v.vehicletypeid
-                        FROM uberaccount u, driver d, vehicle v, vehicletype vt
-                        WHERE u.username = d.username and d.driverid = v.driverid and v.vehicletypeid = vt.vehicletypeid
+            query = ("""SELECT d.driverid, u.username, u.firstname, u.lastname, v.carid, v.licenseplate, v.color, v.year, v.model, v.numseats
+                        FROM uberaccount u, driver d, vehicle v
+                        WHERE u.username = d.username and d.driverid = v.driverid
                         ORDER BY %s;"""%(year, sortoption)
                     )
             cursor = cnx.cursor()
@@ -125,9 +125,9 @@ class VehicleQuery():
                 print(err)
         else:
             sortoption = self.formatsort(sortoption)
-            query = ("""SELECT d.driverid, u.username, u.firstname, u.lastname, v.carid, v.licenseplate, v.color, v.year, v.model, v.numseats, v.vehicletypeid
-                        FROM uberaccount u, driver d, vehicle v, vehicletype vt
-                        WHERE u.username = d.username and d.driverid = v.driverid and v.vehicletypeid = vt.vehicletypeid
+            query = ("""SELECT d.driverid, u.username, u.firstname, u.lastname, v.carid, v.licenseplate, v.color, v.year, v.model, v.numseats
+                        FROM uberaccount u, driver d, vehicle v
+                        WHERE u.username = d.username and d.driverid = v.driverid
                         ORDER BY %s;"""%(sortoption))
             cursor = cnx.cursor()
             cursor.execute(query)
