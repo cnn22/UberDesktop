@@ -17,7 +17,7 @@ class vehicleRecord(Frame):
 
     def vehicleUI(self):
         tv = Treeview(self)
-        tv['columns'] = ("Username", "Firstname", "Lastname", "CarID", "LicensePlate", "Year", "Color", "Model", "NumSeats","VehicleTypeID")
+        tv['columns'] = ("Username", "Firstname", "Lastname", "CarID", "LicensePlate", "Year", "Color", "Model", "NumSeats")
         tv.heading("#0", text="DriverID", anchor='w')
         tv.column("#0", anchor='w', width=50)
 
@@ -48,8 +48,8 @@ class vehicleRecord(Frame):
         tv.heading("NumSeats", text="NumSeats")
         tv.column("NumSeats", anchor="center", width=55)
 
-        tv.heading("VehicleTypeID", text="VehicleTypeID")
-        tv.column("VehicleTypeID", anchor="center", width=60)
+        #tv.heading("VehicleTypeID", text="VehicleTypeID")
+        #tv.column("VehicleTypeID", anchor="center", width=60)
         tv.grid(sticky=(N,S,W,E))
         self.treeview = tv
         self.yscrollbar = ttk.Scrollbar(self, orient='vertical', command=tv.yview)
